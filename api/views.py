@@ -53,7 +53,7 @@ class ProjectViewset(viewsets.ViewSet):
 class MonthlyIncomeViewset(viewsets.ViewSet):
     def list(self, request):
         monthly_income, created = Monthly_Income.objects.get_or_create(
-            id=1, defaults={'monthly_income': 0}
+            id=1, defaults={'income': 0}
         )
         income_total = monthly_income.income or 0 
         
