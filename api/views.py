@@ -52,8 +52,10 @@ class ProjectViewset(viewsets.ViewSet):
     
 class MonthlyIncomeViewset(viewsets.ViewSet):
     def list(self, request):
-        monthly_income, created = Monthly_Income.objects.get_or_create(defaults={'monthly_income': 0})
-        income_total = monthly_income.income if monthly_income else 0 
+        monthly_income, created = Monthly_Income.objects.get_or_create(
+            id=1, defaults={'monthly_income': 0}
+        )
+        income_total = monthly_income.income or 0 
         
         total_payments_price = Project.objects.aggregate(total=models.Sum('price'))['total'] or 0
         
