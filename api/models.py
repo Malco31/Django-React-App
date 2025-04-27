@@ -20,9 +20,6 @@ class Monthly_Income(models.Model):
             raise Exception("Only one Monthly Income instance is allowed.")
         return super().save(*args, **kwargs)
     
-    @classmethod
-    def get_or_create(cls):
-        obj, created = cls.objects.get_or_create(id=1)  # Getting the first entry
-        return obj
+    
     
     
