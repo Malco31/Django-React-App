@@ -66,3 +66,5 @@ DATABASES = {
 }
 
 STATIC_ROOT = BASE_DIR/"staticfiles"
+
+# python -m gunicorn crud.asgi:application -k uvicorn.workers.UvicornWorker
