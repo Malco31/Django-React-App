@@ -20,4 +20,3 @@ urlpatterns = [
 urlpatterns += router.urls
 
 
-# EfhpYhZ0ousWX8L0rclUHTYx8fYfobuUFYRC0uHkJbB1zUnUyOAEI2YDPfKv4PVL
