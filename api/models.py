@@ -1,8 +1,9 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Project(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='projects')
     name = models.CharField(max_length=100)
     start_date = models.DateField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
@@ -12,13 +13,12 @@ class Project(models.Model):
         return self.name
     
 class Monthly_Income(models.Model):
-    income = models.DecimalField(max_digits=10, decimal_places=2, default=0, blank=True, null=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='income')# OnetoOneField Ensure there's only one instance
+    income = models.DecimalField(max_digits=10, decimal_places=2, default=0, blank=True)
     
-    def save(self, *args, **kwargs):
-        # Ensure there's only one instance
-        if not self.id and Monthly_Income.objects.exists():
-            raise Exception("Only one Monthly Income instance is allowed.")
-        return super().save(*args, **kwargs)
+    def __str__(self):
+        return f"{self.user.username}'s income: ${self.income}"
+    
     
     
     

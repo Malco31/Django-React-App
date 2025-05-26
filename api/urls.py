@@ -1,14 +1,23 @@
-from django.urls import path
-from .views import *
+from django.urls import path, include
+from django.contrib.auth import views as auth_views
 from rest_framework.routers import DefaultRouter
+from .views import *
+from . import views
+
 
 router = DefaultRouter()
 router.register('project', ProjectViewset, basename='project')
 router.register('monthly_income', MonthlyIncomeViewset, basename='monthly_income')
 
-urlpatterns = router.urls
 
-# urlpatterns = [
-    
-#     path('', home)
-# ]
+urlpatterns = [
+    path('register/', RegisterView.as_view(), name='register'),
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
+    path('auth-check/', views.auth_check, name='auth-check'),
+]
+
+urlpatterns += router.urls
+
+
+# EfhpYhZ0ousWX8L0rclUHTYx8fYfobuUFYRC0uHkJbB1zUnUyOAEI2YDPfKv4PVL

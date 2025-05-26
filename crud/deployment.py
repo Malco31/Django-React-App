@@ -26,6 +26,13 @@ CORS_ALLOWED_ORIGINS = [
     'https://django-react-app-frontend.onrender.com'
 ]
 
+CORS_ALLOW_CREDENTIALS = True
+
+CSRF_COOKIE_SECURE = True    # True for production/https
+CSRF_COOKIE_SAMESITE = 'None' 
+SESSION_COOKIE_SECURE = True     # True for production/https
+SESSION_COOKIE_SAMESITE = 'None'  
+
 STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
@@ -46,7 +53,8 @@ STORAGES = {
 DATABASES = {
     "default": dj_database_url.config(
         default= os.environ['DATABASE_URL'],
-        conn_max_age=600
+        conn_max_age=600,
+        ssl_require = True
     )
     # {
     #     "Engine": "django.db.backends.postgresql",

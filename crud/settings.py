@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,11 @@ SECRET_KEY = "django-insecure-0slu98(cz$q59330i!az9z+b*t_@-s_p@g^7lfg0a9dtz3g*u^
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost', 
+    '127.0.0.1', 
+    '8f04-207-231-1-151.ngrok-free.app'
+]
 
 
 # Application definition
@@ -39,6 +44,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "corsheaders",
+    "rest_framework_simplejwt",
     "api"
 ]
 
@@ -47,15 +53,82 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
+    
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django.security.csrf': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication'
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
+
+CORS_ALLOW_ALL_ORIGINS = False
+
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000'
+    "https://8f04-207-231-1-151.ngrok-free.app",  # ngrok frontend url
+    "http://localhost:3000",  # Vite development server
+    "http://127.0.0.1:3000",
 ]
+    # 'http://localhost:3000',
+    # 'http://127.0.0.1:3000',
+    # "https://a21b-207-231-1-151.ngrok-free.app", # ngrok backend url
+
+# CSRF settings
+CSRF_COOKIE_SAMESITE = 'None'  # 'Lax' is compatible with most browsers
+CSRF_COOKIE_HTTPONLY = False  # False to allow JavaScript access to the CSRF cookie
+CSRF_COOKIE_SECURE = True    # Set to True in production with HTTPS
+CSRF_TRUSTED_ORIGINS = [
+    "https://8f04-207-231-1-151.ngrok-free.app",  # ngrok frontend url
+    "http://localhost:3000",  # Vite development server
+    "http://127.0.0.1:3000",
+]
+# 'http://localhost:3000',
+    # 'http://127.0.0.1:3000',
+
+# Session settings
+SESSION_COOKIE_SAMESITE = 'None'  # 'Lax' is compatible with most browsers
+SESSION_COOKIE_HTTPONLY = False    # True for security (prevents JS access)
+SESSION_COOKIE_SECURE = True     # Set to True in production with HTTPS
+SESSION_COOKIE_AGE = 1209600      # 2 weeks in seconds (default is 2 weeks)
+
+CSRF_COOKIE_NAME = "csrftoken"  # This is the default value, but ensure it's set
+
+CSRF_USE_SESSIONS = False   
+CSRF_HEADER_NAME = "X-CSRFToken"
+
+CSRF_FAILURE_VIEW = 'django.views.csrf.csrf_failure'
+CORS_EXPOSE_HEADERS = ['X-CSRFToken']
+
+# CORS_ALLOW_HEADERS = list(default_headers) + [
+#     "X-CSRFToken",
+# ]
+
+CORS_ALLOW_CREDENTIALS = True
 
 STATIC_ROOT = BASE_DIR/'staticfiles'
 
@@ -131,3 +204,13 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+    "ROTATE_REFRESH_TOKENS": True,
+    "BLACKLIST_AFTER_ROTATION": True,
+    "AUTH_HEADERS_TYPES": ("Bearer",),
+    "AUTH_TOKENS_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+}
