@@ -23,7 +23,6 @@ from .models import *
 
 # Create your views here.
 
-@csrf_exempt
 def home(request):
     return HttpResponse("This is the homepage")
 
@@ -43,7 +42,7 @@ class MyTokenObtainPairView(TokenObtainPairView):
     
 
 # @method_decorator(ensure_csrf_cookie, name='dispatch')
-@csrf_exempt
+
 class RegisterView(APIView):
     permission_classes = [permissions.AllowAny]
     queryset = User.objects.all()
@@ -64,7 +63,6 @@ class RegisterView(APIView):
 
 
 # @method_decorator(ensure_csrf_cookie, name='dispatch')
-@csrf_exempt
 class LoginView(APIView):
     permission_classes = [permissions.AllowAny]
     
@@ -98,7 +96,7 @@ class LoginView(APIView):
             return response
         return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
     
-@csrf_exempt
+
 class LogoutView(APIView):
     def post(self, request):
         logout(request)
@@ -111,7 +109,6 @@ class LogoutView(APIView):
 
 
 # New auth-check endpoint to verify authentication status
-@csrf_exempt
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
 def auth_check(request):
@@ -126,7 +123,6 @@ def auth_check(request):
     })
     
 # @method_decorator(ensure_csrf_cookie, name='dispatch')
-@csrf_exempt
 class ProjectViewset(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     authentication_classes = [JWTAuthentication]
@@ -179,7 +175,7 @@ class ProjectViewset(viewsets.ModelViewSet):
         return Response(status=204)
     
     
-@csrf_exempt   
+    
 class MonthlyIncomeViewset(viewsets.ViewSet):
     permission_classes = [permissions.IsAuthenticated]
     

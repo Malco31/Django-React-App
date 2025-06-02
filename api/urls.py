@@ -1,7 +1,7 @@
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from rest_framework.routers import DefaultRouter
-from .views import *
+from .views import RegisterView, LoginView, LogoutView, ProjectViewset, MonthlyIncomeViewset
 from . import views
 
 
@@ -16,6 +16,8 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('auth-check/', views.auth_check, name='auth-check'),
 ]
+
+print("RegisterView:", RegisterView)
 
 urlpatterns += router.urls
 

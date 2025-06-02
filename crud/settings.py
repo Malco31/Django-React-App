@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "rest_framework_simplejwt",
-    "api"
+    "api",
 ]
 
 MIDDLEWARE = [
@@ -79,7 +79,6 @@ LOGGING = {
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication'
     ],
     'DEFAULT_PERMISSION_CLASSES': [
@@ -111,18 +110,18 @@ CSRF_TRUSTED_ORIGINS = [
     # 'http://127.0.0.1:3000',
 
 # Session settings
-SESSION_COOKIE_SAMESITE = 'None'  # 'Lax' is compatible with most browsers
-SESSION_COOKIE_HTTPONLY = False    # True for security (prevents JS access)
-SESSION_COOKIE_SECURE = True     # Set to True in production with HTTPS
-SESSION_COOKIE_AGE = 1209600      # 2 weeks in seconds (default is 2 weeks)
+# SESSION_COOKIE_SAMESITE = 'None'  # 'Lax' is compatible with most browsers
+# SESSION_COOKIE_HTTPONLY = False    # True for security (prevents JS access)
+# SESSION_COOKIE_SECURE = True     # Set to True in production with HTTPS
+# SESSION_COOKIE_AGE = 1209600      # 2 weeks in seconds (default is 2 weeks)
 
-CSRF_COOKIE_NAME = "csrftoken"  # This is the default value, but ensure it's set
+# CSRF_COOKIE_NAME = "csrftoken"  # This is the default value, but ensure it's set
 
-CSRF_USE_SESSIONS = False   
-CSRF_HEADER_NAME = "X-CSRFToken"
+# CSRF_USE_SESSIONS = False   
+# CSRF_HEADER_NAME = "X-CSRFToken"
 
-CSRF_FAILURE_VIEW = 'django.views.csrf.csrf_failure'
-CORS_EXPOSE_HEADERS = ['X-CSRFToken']
+# CSRF_FAILURE_VIEW = 'django.views.csrf.csrf_failure'
+# CORS_EXPOSE_HEADERS = ['X-CSRFToken']
 
 # CORS_ALLOW_HEADERS = list(default_headers) + [
 #     "X-CSRFToken",
