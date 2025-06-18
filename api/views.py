@@ -49,6 +49,7 @@ class RegisterView(APIView):
     serializer_class = UserSerializer
     
     def post(self, request):
+        print("Request Data:", request.data)  # <--- add this
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
@@ -169,7 +170,7 @@ class ProjectViewset(viewsets.ModelViewSet):
         else:
             return Response(serializer.errors, status = 400)
     
-    def delete(self, request, pk=None):
+    def destroy(self, request, pk=None):
         project = get_object_or_404(self.get_queryset(), pk=pk)
         project.delete()
         return Response(status=204)

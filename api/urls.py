@@ -17,7 +17,6 @@ urlpatterns = [
     path('auth-check/', views.auth_check, name='auth-check'),
 ]
 
-print("RegisterView:", RegisterView)
 
 urlpatterns += router.urls
 
