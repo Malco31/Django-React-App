@@ -28,9 +28,9 @@ CORS_ALLOWED_ORIGINS = [
 
 CORS_ALLOW_CREDENTIALS = True
 
-CSRF_COOKIE_SECURE = True    # True for production/https
+CSRF_COOKIE_SECURE = True    
 CSRF_COOKIE_SAMESITE = 'None' 
-SESSION_COOKIE_SECURE = True     # True for production/https
+SESSION_COOKIE_SECURE = True     
 SESSION_COOKIE_SAMESITE = 'None'  
 
 STORAGES = {

@@ -30,19 +30,6 @@ class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
 
-# @method_decorator(ensure_csrf_cookie, name='dispatch')
-# class GETCSRFToken(APIView):
-#     permission_classes = []
-    
-#     def get(self, request, *args, **kwargs):
-#         csrf_token = get_token(request)
-#         response = JsonResponse({'message': 'CSRF cookie set', 'csrfToken': csrf_token})
-#         response['X-CSRFToken'] = csrf_token
-#         return response
-    
-
-# @method_decorator(ensure_csrf_cookie, name='dispatch')
-
 class RegisterView(APIView):
     permission_classes = [permissions.AllowAny]
     queryset = User.objects.all()
@@ -63,7 +50,7 @@ class RegisterView(APIView):
         return Response(serializer.errors, status=400)
 
 
-# @method_decorator(ensure_csrf_cookie, name='dispatch')
+
 class LoginView(APIView):
     permission_classes = [permissions.AllowAny]
     
@@ -71,8 +58,6 @@ class LoginView(APIView):
         return Response({'message': 'CSRF cookie set'})
    
     def post(self, request):
-        # csrf_token = request.headers.get("X-CSRFToken")
-        # print("Received CSRF Token:", csrf_token)
         username = request.data.get('username')
         password = request.data.get('password')
         
@@ -82,9 +67,6 @@ class LoginView(APIView):
         
         if user is not None:
             login(request, user)
-
-            # Generate new CSRF token (associated with new session)
-            # new_csrf_token = get_token(request)
 
             response = Response({
                 'message': 'Login successful',
@@ -103,11 +85,6 @@ class LogoutView(APIView):
         logout(request)
         return Response({'message': 'Logged out'})
     
-    
-# @ensure_csrf_cookie
-# def csrf(request):
-#     return JsonResponse({'csrfToken': get_token(request)})
-
 
 # New auth-check endpoint to verify authentication status
 @api_view(['GET'])
@@ -123,7 +100,7 @@ def auth_check(request):
         'userId': request.user.id
     })
     
-# @method_decorator(ensure_csrf_cookie, name='dispatch')
+
 class ProjectViewset(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     authentication_classes = [JWTAuthentication]
@@ -144,12 +121,7 @@ class ProjectViewset(viewsets.ModelViewSet):
         return Response(serializer.data)
     
     def create(self, request):
-        # csrf_token = request.headers.get("X-CSRFToken")
-        # print("Received CSRF Token:", csrf_token)
         serializer = self.serializer_class(data=request.data, context={'request': request})
-        # print("X-CSRFToken Header:", request.META.get('HTTP_X_CSRFTOKEN'))
-        # print("CSRF Cookie:", request.COOKIES.get('csrftoken'))
-        # print("Session Cookie:", request.COOKIES.get('sessionid'))
         if serializer.is_valid(): 
             serializer.save(user=request.user) #sets the user automatically
             return Response(serializer.data)

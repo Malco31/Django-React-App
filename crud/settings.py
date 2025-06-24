@@ -4,14 +4,12 @@ import os
 from pathlib import Path
 from datetime import timedelta
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Load .env from BASE_DIR
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-# Now safely read your variables
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 
@@ -22,7 +20,7 @@ SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'localhost', 
@@ -87,43 +85,22 @@ REST_FRAMEWORK = {
 CORS_ALLOW_ALL_ORIGINS = False
 
 CORS_ALLOWED_ORIGINS = [
-    "https://8f04-207-231-1-151.ngrok-free.app",  # ngrok frontend url
-    "http://localhost:3000",  # Vite development server
+    "https://8f04-207-231-1-151.ngrok-free.app",  
+    "http://localhost:3000",  
     "http://127.0.0.1:3000",
 ]
-    # 'http://localhost:3000',
-    # 'http://127.0.0.1:3000',
-    # "https://a21b-207-231-1-151.ngrok-free.app", # ngrok backend url
+
 
 # CSRF settings
-CSRF_COOKIE_SAMESITE = 'None'  # 'Lax' is compatible with most browsers
-CSRF_COOKIE_HTTPONLY = False  # False to allow JavaScript access to the CSRF cookie
-CSRF_COOKIE_SECURE = True    # Set to True in production with HTTPS
+CSRF_COOKIE_SAMESITE = 'None' 
+CSRF_COOKIE_HTTPONLY = False  
+CSRF_COOKIE_SECURE = True    
 CSRF_TRUSTED_ORIGINS = [
-    "https://8f04-207-231-1-151.ngrok-free.app",  # ngrok frontend url
-    "http://localhost:3000",  # Vite development server
+    "https://8f04-207-231-1-151.ngrok-free.app",  
+    "http://localhost:3000", 
     "http://127.0.0.1:3000",
 ]
-# 'http://localhost:3000',
-    # 'http://127.0.0.1:3000',
 
-# Session settings
-# SESSION_COOKIE_SAMESITE = 'None'  # 'Lax' is compatible with most browsers
-# SESSION_COOKIE_HTTPONLY = False    # True for security (prevents JS access)
-# SESSION_COOKIE_SECURE = True     # Set to True in production with HTTPS
-# SESSION_COOKIE_AGE = 1209600      # 2 weeks in seconds (default is 2 weeks)
-
-# CSRF_COOKIE_NAME = "csrftoken"  # This is the default value, but ensure it's set
-
-# CSRF_USE_SESSIONS = False   
-# CSRF_HEADER_NAME = "X-CSRFToken"
-
-# CSRF_FAILURE_VIEW = 'django.views.csrf.csrf_failure'
-# CORS_EXPOSE_HEADERS = ['X-CSRFToken']
-
-# CORS_ALLOW_HEADERS = list(default_headers) + [
-#     "X-CSRFToken",
-# ]
 
 CORS_ALLOW_CREDENTIALS = True
 
